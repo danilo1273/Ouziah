@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Plus, Edit2, Trash2, GripVertical, Image as ImageIcon } from 'lucide-react';
+import { Plus, Edit2, Trash2, GripVertical, Image as ImageIcon, Images } from 'lucide-react';
 
 const INITIAL_BANNERS = [
   {
@@ -56,7 +56,7 @@ export default function AdminCarousels() {
             {banners.length} banners
           </span>
         </div>
-        
+
         <ul className="divide-y divide-gray-200">
           {banners.map((banner) => (
             <li key={banner.id} className="p-4 sm:px-6 hover:bg-gray-50 transition-colors group">
@@ -82,9 +82,8 @@ export default function AdminCarousels() {
                   <div className="flex items-center justify-between">
                     <p className="text-sm font-medium text-[#2A1A14] truncate">{banner.title}</p>
                     <div className="ml-2 flex-shrink-0 flex">
-                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        banner.status === 'Ativo' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                      }`}>
+                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${banner.status === 'Ativo' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                        }`}>
                         {banner.status}
                       </span>
                     </div>
@@ -99,7 +98,7 @@ export default function AdminCarousels() {
                         Link: {banner.link}
                       </p>
                     </div>
-                    
+
                     {/* Actions */}
                     <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                       <button className="p-1 text-gray-400 hover:text-blue-600 transition-colors" title="Editar">
@@ -115,7 +114,7 @@ export default function AdminCarousels() {
             </li>
           ))}
         </ul>
-        
+
         {banners.length === 0 && (
           <div className="text-center py-12">
             <Images className="mx-auto h-12 w-12 text-gray-400" />
