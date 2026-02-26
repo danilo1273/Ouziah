@@ -43,13 +43,28 @@ export default function ShopLayout() {
 
             {/* Actions */}
             <div className="flex items-center gap-4 md:gap-6">
-              {user ? (
-                <Link to="/admin" className="hidden md:flex flex-col items-center text-white/70 hover:text-white transition-colors">
-                  <User className="h-6 w-6" />
-                  <span className="text-[10px] uppercase font-semibold mt-1">Admin</span>
+              {profile?.role === 'admin' && (
+                <Link to="/admin" className="hidden lg:flex flex-col items-center px-4 py-2 bg-white/10 hover:bg-white/20 rounded-xl transition-all border border-white/10">
+                  <span className="text-[10px] uppercase font-black tracking-widest text-white italic">Painel Gerente</span>
                 </Link>
+              )}
+
+              {user ? (
+                <div className="flex items-center gap-4 border-l border-white/10 pl-4">
+                  <div className="hidden md:flex flex-col items-end">
+                    <span className="text-[10px] text-white/50 uppercase font-bold tracking-wider">Logado como</span>
+                    <span className="text-xs text-white font-bold truncate max-w-[120px]">{user.email?.split('@')[0]}</span>
+                  </div>
+                  <button
+                    onClick={() => useAuth().signOut()}
+                    className="flex flex-col items-center text-white/50 hover:text-white transition-colors"
+                  >
+                    <User className="h-6 w-6" />
+                    <span className="text-[10px] uppercase font-semibold mt-1">Sair</span>
+                  </button>
+                </div>
               ) : (
-                <Link to="/admin/login" className="hidden md:flex flex-col items-center text-white/70 hover:text-white transition-colors">
+                <Link to="/login" className="flex flex-col items-center text-white/70 hover:text-white transition-colors">
                   <User className="h-6 w-6" />
                   <span className="text-[10px] uppercase font-semibold mt-1">Entrar</span>
                 </Link>
