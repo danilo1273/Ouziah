@@ -44,8 +44,8 @@ export default function AdminLayout() {
                   key={item.name}
                   to={item.href}
                   className={`group flex items-center px-3 py-2.5 text-sm font-medium rounded-md transition-colors ${isActive
-                      ? 'bg-white/10 text-white'
-                      : 'text-gray-300 hover:bg-white/5 hover:text-white'
+                    ? 'bg-white/10 text-white'
+                    : 'text-gray-300 hover:bg-white/5 hover:text-white'
                     }`}
                 >
                   <item.icon
@@ -80,15 +80,15 @@ export default function AdminLayout() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top Header */}
-        <header className="h-16 bg-white shadow-sm flex items-center justify-between px-4 sm:px-6 lg:px-8 z-10">
+        <header className="h-16 bg-[#2A1A14] md:bg-white shadow-sm flex items-center justify-between px-4 sm:px-6 lg:px-8 z-10">
           <div className="flex items-center md:hidden">
-            <button className="text-gray-500 hover:text-gray-700">
+            <button className="text-white/70 hover:text-white mr-4">
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
             <img src={logo} alt="Ouziah Logo" className="h-8 w-8 object-contain" />
-            <span className="ml-4 font-serif text-xl font-bold tracking-tight text-[#2A1A14]">OUZIAH ERP</span>
+            <span className="ml-2 font-serif text-xl font-bold tracking-tight text-white">OUZIAH ERP</span>
           </div>
 
           <div className="hidden md:flex flex-1">
