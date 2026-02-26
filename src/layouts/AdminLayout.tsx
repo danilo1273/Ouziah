@@ -1,4 +1,5 @@
-import { Outlet, Link, useLocation } from 'react-router-dom';
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import {
   LayoutDashboard,
   Images,
@@ -23,6 +24,15 @@ const navigation = [
 
 export default function AdminLayout() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/admin/login');
+  };
+
+  const userInitials = user?.email?.substring(0, 2).toUpperCase() || 'AD';
 
   return (
     <div className="min-h-screen bg-gray-100 flex font-sans">
@@ -69,6 +79,7 @@ export default function AdminLayout() {
             Configurações
           </Link>
           <button
+            onClick={handleSignOut}
             className="w-full group flex items-center px-3 py-2 mt-1 text-sm font-medium rounded-md text-gray-300 hover:bg-white/5 hover:text-white transition-colors"
           >
             <LogOut className="mr-3 flex-shrink-0 h-5 w-5 text-gray-400 group-hover:text-gray-300" />
@@ -105,11 +116,11 @@ export default function AdminLayout() {
 
             <div className="flex items-center gap-3 border-l pl-4">
               <div className="w-8 h-8 rounded-full bg-[#2A1A14] text-white flex items-center justify-center text-sm font-bold">
-                AD
+                {userInitials}
               </div>
               <div className="hidden md:block text-sm">
-                <p className="font-medium text-gray-700">Admin User</p>
-                <p className="text-xs text-gray-500">admin@ouziah.com</p>
+                <p className="font-medium text-gray-700">{user?.email?.split('@')[0]}</p>
+                <p className="text-xs text-gray-500">{user?.email}</p>
               </div>
             </div>
           </div>
