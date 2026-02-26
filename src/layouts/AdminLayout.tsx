@@ -37,10 +37,10 @@ export default function AdminLayout() {
   return (
     <div className="min-h-screen bg-gray-100 flex font-sans">
       {/* Sidebar */}
-      <aside className="w-64 bg-[#2A1A14] text-white flex-shrink-0 hidden md:flex flex-col">
-        <div className="h-16 flex items-center px-6 border-b border-gray-800">
-          <Link to="/" className="flex items-center gap-2">
-            <img src={logo} alt="Ouziah Logo" className="h-8 w-8 object-contain brightness-0 invert" />
+      <aside className="w-64 bg-[#1b110b] text-white flex-shrink-0 hidden md:flex flex-col">
+        <div className="h-24 flex items-center px-6 border-b border-white/5">
+          <Link to="/" className="flex items-center gap-3">
+            <img src={logo} alt="Ouziah Logo" className="h-10 w-10 object-contain" />
             <span className="font-serif text-xl font-bold tracking-tight text-white">OUZIAH ERP</span>
           </Link>
         </div>
