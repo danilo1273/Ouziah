@@ -23,18 +23,20 @@ export default function Auth() {
         setError(null);
 
         try {
+            const trimmedEmail = email.trim();
+            const trimmedPassword = password.trim();
+
             if (isLogin) {
                 const { error } = await supabase.auth.signInWithPassword({
-                    email,
-                    password,
+                    email: trimmedEmail,
+                    password: trimmedPassword,
                 });
                 if (error) throw error;
             } else {
                 const { error } = await supabase.auth.signUp({
-                    email,
-                    password,
+                    email: trimmedEmail,
+                    password: trimmedPassword,
                 });
-                if (error) throw error;
                 if (error) throw error;
                 showNotification('success', 'Cadastro realizado com sucesso! Verifique seu e-mail para confirmar seu acesso.');
             }
@@ -86,7 +88,7 @@ export default function Auth() {
                         </div>
 
                         <div>
-                            <label htmlFor="password" theological="block text-xs font-bold text-gray-400 uppercase tracking-widest">
+                            <label htmlFor="password" className="block text-xs font-bold text-gray-400 uppercase tracking-widest">
                                 Senha
                             </label>
                             <div className="mt-1 relative">
@@ -96,7 +98,7 @@ export default function Auth() {
                                     required
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="appearance-none block w-full px-4 py-3.5 bg-white/10 border border-white/10 rounded-xl shadow-sm placeholder-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/30 sm:text-sm transition-all"
+                                    className="appearance-none block w-full px-4 py-3.5 bg-white/10 border border-white/10 rounded-xl shadow-sm placeholder-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/30 sm:text-sm font-mono tracking-[0.3em] transition-all"
                                 />
                             </div>
                         </div>
