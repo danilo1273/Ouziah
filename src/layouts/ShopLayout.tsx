@@ -1,5 +1,6 @@
 import { Outlet, Link } from 'react-router-dom';
 import { Search, ShoppingCart, User, Menu } from 'lucide-react';
+import logo from '../assets/logo.jpg';
 
 export default function ShopLayout() {
   return (
@@ -18,12 +19,8 @@ export default function ShopLayout() {
               <Menu className="h-6 w-6" />
             </button>
 
-            {/* Logo */}
             <Link to="/" className="flex-shrink-0 flex items-center gap-2">
-              <div className="w-10 h-10 bg-[#2A1A14] rounded-full flex items-center justify-center text-white font-serif italic font-bold text-xl relative overflow-hidden">
-                <span className="absolute left-1 top-1 text-[8px]">✦</span>
-                O
-              </div>
+              <img src={logo} alt="Ouziah Logo" className="h-10 w-10 md:h-12 md:w-12 object-contain" />
               <span className="font-serif text-2xl font-bold tracking-tight text-[#2A1A14]">OUZIAH</span>
             </Link>
 
@@ -56,7 +53,7 @@ export default function ShopLayout() {
               </button>
             </div>
           </div>
-          
+
           {/* Mobile Search */}
           <div className="md:hidden pb-4">
             <div className="relative w-full">
@@ -97,10 +94,7 @@ export default function ShopLayout() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-[#2A1A14] font-serif italic font-bold text-lg relative overflow-hidden">
-                  <span className="absolute left-0.5 top-0.5 text-[6px]">✦</span>
-                  O
-                </div>
+                <img src={logo} alt="Ouziah Logo" className="h-8 w-8 object-contain brightness-0 invert" />
                 <span className="font-serif text-xl font-bold tracking-tight text-white">OUZIAH</span>
               </div>
               <p className="text-gray-400 text-sm">
