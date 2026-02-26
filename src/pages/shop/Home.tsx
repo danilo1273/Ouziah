@@ -2,35 +2,57 @@ import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Star, Loader2 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
-const MOCK_CAROUSEL = [
-  {
-    id: 1,
-    image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop',
-    title: 'NOVA COLEÇÃO PERFORMANCE',
-    subtitle: 'Supere seus limites com a nova linha Ouziah',
-    cta: 'COMPRAR AGORA',
-  },
-  {
-    id: 2,
-    image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=2070&auto=format&fit=crop',
-    title: 'TREINO PESADO',
-    subtitle: 'Roupas que aguentam o seu ritmo',
-    cta: 'VER OFERTAS',
-  },
-];
+interface CarouselItem {
+  id: string;
+  image_url: string;
+  title: string;
+  subtitle: string;
+  cta_text: string;
+  cta_link: string;
+}
 
 export default function ShopHome() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [carousels, setCarousels] = useState<CarouselItem[]>([]);
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchProducts();
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % MOCK_CAROUSEL.length);
-    }, 5000);
-    return () => clearInterval(timer);
+    fetchData();
   }, []);
+
+  useEffect(() => {
+    if (carousels.length > 0) {
+      const timer = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % carousels.length);
+      }, 5000);
+      return () => clearInterval(timer);
+    }
+  }, [carousels.length]);
+
+  async function fetchData() {
+    setLoading(true);
+    await Promise.all([
+      fetchCarousels(),
+      fetchProducts()
+    ]);
+    setLoading(false);
+  }
+
+  async function fetchCarousels() {
+    try {
+      const { data, error } = await supabase
+        .from('carousels')
+        .select('*')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true });
+
+      if (error) throw error;
+      setCarousels(data || []);
+    } catch (error) {
+      console.error('Erro ao carregar carrosséis:', error);
+    }
+  }
 
   async function fetchProducts() {
     try {
@@ -48,64 +70,77 @@ export default function ShopHome() {
     }
   }
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % MOCK_CAROUSEL.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + MOCK_CAROUSEL.length) % MOCK_CAROUSEL.length);
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % carousels.length);
+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + carousels.length) % carousels.length);
 
   return (
     <div className="bg-white">
       {/* Hero Carousel */}
-      <div className="relative h-[400px] md:h-[600px] w-full overflow-hidden group">
-        {MOCK_CAROUSEL.map((slide, index) => (
-          <div
-            key={slide.id}
-            className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
-              }`}
-          >
-            <div className="absolute inset-0 bg-black/40 z-10" />
-            <img
-              src={slide.image}
-              alt={slide.title}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4">
-              <h2 className="text-3xl md:text-6xl font-black text-white mb-4 tracking-tight uppercase">
-                {slide.title}
-              </h2>
-              <p className="text-lg md:text-2xl text-gray-200 mb-8 font-medium">
-                {slide.subtitle}
-              </p>
-              <button className="bg-white text-[#2A1A14] px-8 py-4 font-bold uppercase tracking-wider hover:bg-gray-100 transition-colors rounded-sm">
-                {slide.cta}
-              </button>
+      <div className="relative h-[400px] md:h-[600px] w-full overflow-hidden group bg-gray-900">
+        {carousels.length > 0 ? (
+          carousels.map((slide, index) => (
+            <div
+              key={slide.id}
+              className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                }`}
+            >
+              <div className="absolute inset-0 bg-black/40 z-10" />
+              <img
+                src={slide.image_url}
+                alt={slide.title}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4">
+                <h2 className="text-3xl md:text-6xl font-black text-white mb-4 tracking-tight uppercase italic drop-shadow-2xl">
+                  {slide.title}
+                </h2>
+                <p className="text-lg md:text-2xl text-gray-200 mb-8 font-medium drop-shadow-lg">
+                  {slide.subtitle}
+                </p>
+                <a
+                  href={slide.cta_link}
+                  className="bg-white text-[#2A1A14] px-8 py-4 font-bold uppercase tracking-wider hover:bg-gray-100 transition-colors rounded-sm inline-block"
+                >
+                  {slide.cta_text}
+                </a>
+              </div>
             </div>
+          ))
+        ) : !loading && (
+          <div className="absolute inset-0 flex items-center justify-center text-white/20">
+            <p className="font-black italic text-2xl uppercase tracking-[0.2em]">Ouziah Sports</p>
           </div>
-        ))}
+        )}
 
         {/* Carousel Controls */}
-        <button
-          onClick={prevSlide}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100"
-        >
-          <ChevronLeft className="w-8 h-8" />
-        </button>
-        <button
-          onClick={nextSlide}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100"
-        >
-          <ChevronRight className="w-8 h-8" />
-        </button>
-
-        {/* Carousel Indicators */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex space-x-2">
-          {MOCK_CAROUSEL.map((_, index) => (
+        {carousels.length > 1 && (
+          <>
             <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`w-12 h-1.5 rounded-full transition-all ${index === currentSlide ? 'bg-white' : 'bg-white/40 hover:bg-white/60'
-                }`}
-            />
-          ))}
-        </div>
+              onClick={prevSlide}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100"
+            >
+              <ChevronLeft className="w-8 h-8" />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100"
+            >
+              <ChevronRight className="w-8 h-8" />
+            </button>
+
+            {/* Carousel Indicators */}
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex space-x-2">
+              {carousels.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`w-12 h-1.5 rounded-full transition-all ${index === currentSlide ? 'bg-white' : 'bg-white/40 hover:bg-white/60'
+                    }`}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </div>
 
       {/* Categories Grid */}
