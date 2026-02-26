@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { LogIn, Loader2, AlertCircle, UserPlus, ArrowRight } from 'lucide-react';
+import { useNotification } from '../context/NotificationContext';
 import logo from '../assets/logo.jpg';
 
 export default function Auth() {
@@ -10,6 +11,7 @@ export default function Auth() {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const { showNotification } = useNotification();
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -33,7 +35,8 @@ export default function Auth() {
                     password,
                 });
                 if (error) throw error;
-                alert('Cadastro realizado com sucesso! Verifique seu e-mail para confirmar (se habilitado no Supabase).');
+                if (error) throw error;
+                showNotification('success', 'Cadastro realizado com sucesso! Verifique seu e-mail para confirmar seu acesso.');
             }
             navigate(from, { replace: true });
         } catch (err: any) {
