@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import logo from '../assets/logo.jpg';
 
 export default function ShopLayout() {
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 font-sans">

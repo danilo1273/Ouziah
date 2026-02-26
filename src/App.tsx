@@ -10,7 +10,7 @@ import AdminInventory from './pages/admin/Inventory';
 import AdminOrders from './pages/admin/Orders';
 import AdminFinance from './pages/admin/Finance';
 import AdminPurchases from './pages/admin/Purchases';
-import Login from './pages/admin/Login';
+import Auth from './pages/Auth';
 
 export default function App() {
   return (
@@ -22,8 +22,11 @@ export default function App() {
             <Route index element={<ShopHome />} />
           </Route>
 
+          {/* Unified Authentication */}
+          <Route path="/login" element={<Auth />} />
+          <Route path="/admin/login" element={<Navigate to="/login" replace />} />
+
           {/* Admin Routes */}
-          <Route path="/admin/login" element={<Login />} />
           <Route
             path="/admin"
             element={
