@@ -1,8 +1,11 @@
 import { Outlet, Link } from 'react-router-dom';
 import { Search, ShoppingCart, User, Menu } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import logo from '../assets/logo.jpg';
 
 export default function ShopLayout() {
+  const { user } = useAuth();
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 font-sans">
       {/* Top Bar */}
@@ -40,10 +43,17 @@ export default function ShopLayout() {
 
             {/* Actions */}
             <div className="flex items-center gap-4 md:gap-6">
-              <Link to="/admin" className="hidden md:flex flex-col items-center text-white/70 hover:text-white transition-colors">
-                <User className="h-6 w-6" />
-                <span className="text-[10px] uppercase font-semibold mt-1">Minha Conta</span>
-              </Link>
+              {user ? (
+                <Link to="/admin" className="hidden md:flex flex-col items-center text-white/70 hover:text-white transition-colors">
+                  <User className="h-6 w-6" />
+                  <span className="text-[10px] uppercase font-semibold mt-1">Admin</span>
+                </Link>
+              ) : (
+                <Link to="/admin/login" className="hidden md:flex flex-col items-center text-white/70 hover:text-white transition-colors">
+                  <User className="h-6 w-6" />
+                  <span className="text-[10px] uppercase font-semibold mt-1">Entrar</span>
+                </Link>
+              )}
               <button className="flex flex-col items-center text-white/70 hover:text-white transition-colors relative">
                 <ShoppingCart className="h-6 w-6" />
                 <span className="absolute -top-1 -right-2 bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">
