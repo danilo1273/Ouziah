@@ -91,15 +91,15 @@ export default function AdminLayout() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top Header */}
-        <header className="h-16 bg-[#2A1A14] md:bg-white shadow-sm flex items-center justify-between px-4 sm:px-6 lg:px-8 z-10">
+        <header className="h-20 bg-[#1b110b] md:bg-white shadow-sm flex items-center justify-between px-4 sm:px-6 lg:px-8 z-10">
           <div className="flex items-center md:hidden">
             <button className="text-white/70 hover:text-white mr-4">
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
-            <img src={logo} alt="Ouziah Logo" className="h-8 w-8 object-contain" />
-            <span className="ml-2 font-serif text-xl font-bold tracking-tight text-white">OUZIAH ERP</span>
+            <img src={logo} alt="Ouziah Logo" className="h-12 w-12 object-contain" />
+            <span className="ml-3 font-serif text-xl font-bold tracking-tight text-white">OUZIAH ERP</span>
           </div>
 
           <div className="hidden md:flex flex-1">
@@ -115,7 +115,7 @@ export default function AdminLayout() {
             </button>
 
             <div className="flex items-center gap-3 border-l pl-4">
-              <div className="w-8 h-8 rounded-full bg-[#2A1A14] text-white flex items-center justify-center text-sm font-bold">
+              <div className="w-10 h-10 rounded-full bg-[#1b110b] text-white flex items-center justify-center text-sm font-bold border border-gray-100">
                 {userInitials}
               </div>
               <div className="hidden md:block text-sm">

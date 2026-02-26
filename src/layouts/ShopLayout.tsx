@@ -11,17 +11,17 @@ export default function ShopLayout() {
       </div>
 
       {/* Header */}
-      <header className="bg-[#2A1A14] border-b border-white/10 sticky top-0 z-50">
+      <header className="bg-[#1b110b] border-b border-white/5 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 md:h-20">
+          <div className="flex justify-between items-center h-20 md:h-28">
             {/* Mobile Menu */}
             <button className="md:hidden p-2 text-white/70 hover:text-white transition-colors">
-              <Menu className="h-6 w-6" />
+              <Menu className="h-7 w-7" />
             </button>
 
-            <Link to="/" className="flex-shrink-0 flex items-center gap-2">
-              <img src={logo} alt="Ouziah Logo" className="h-10 w-10 md:h-12 md:w-12 object-contain" />
-              <span className="font-serif text-2xl font-bold tracking-tight text-white">OUZIAH</span>
+            <Link to="/" className="flex-shrink-0 flex items-center gap-3">
+              <img src={logo} alt="Ouziah Logo" className="h-14 w-14 md:h-20 md:w-20 object-contain" />
+              <span className="font-serif text-2xl md:text-3xl font-black tracking-tight text-white uppercase italic">OUZIAH</span>
             </Link>
 
             {/* Search Bar (Desktop) */}
